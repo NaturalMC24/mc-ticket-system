@@ -1,3 +1,4 @@
+const { sendTicketMessage } = require("../bot/discord");
 const express = require("express");
 const router = express.Router();
 const Ticket = require("../models/Ticket");
@@ -18,6 +19,7 @@ router.post("/", async (req, res) => {
     });
 
     await ticket.save();
+    sendTicketMessage(ticket);
     res.status(201).json(ticket);
 
   } catch (err) {
