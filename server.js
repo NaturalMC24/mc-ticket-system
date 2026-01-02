@@ -22,3 +22,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server avviato sulla porta ${PORT}`);
 });
+
+const ticketRoutes = require("./routes/tickets");
+
+app.use("/api/tickets", ticketRoutes);
