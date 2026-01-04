@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+app.use(express.static("public"));
+
 
 // test route
 app.get("/", (req, res) => {
@@ -26,3 +28,7 @@ app.listen(PORT, () => {
 const ticketRoutes = require("./routes/tickets");
 
 app.use("/api/tickets", ticketRoutes);
+
+app.get("/ticket", (req, res) => {
+  res.sendFile(__dirname + "/public/ticket.html");
+});

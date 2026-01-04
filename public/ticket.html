@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket Minecraft</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+    button {
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<form id="ticketForm">
+  <h2>🎫 Ticket Supporto</h2>
+
+  <input type="text" id="username" placeholder="Username Minecraft" required>
+  <input type="text" id="uuid" placeholder="UUID Minecraft" required>
+  <textarea id="message" placeholder="Descrivi il problema" required></textarea>
+
+  <button type="submit">Invia Ticket</button>
+  <p id="result"></p>
+</form>
+
+<script>
+  const form = document.getElementById("ticketForm");
+  const result = document.getElementById("result");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username: document.getElementById("username").value,
+      uuid: document.getElementById("uuid").value,
+      message: document.getElementById("message").value
+    };
+
+    const res = await fetch("/api/tickets", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      result.textContent = "✅ Ticket inviato!";
+      form.reset();
+    } else {
+      result.textContent = "❌ Errore nell'invio";
+    }
+  });
+</script>
+
+</body>
+</html>
