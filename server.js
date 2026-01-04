@@ -1,3 +1,5 @@
+require("./bot/discord");
+require("./bot/telgram");
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();

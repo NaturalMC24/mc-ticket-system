@@ -1,32 +1,38 @@
-const { Client, GatewayIntentBits } = require("discord.js");
+cconst { Client, GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages
+  ]
 });
 
 const CHANNEL_ID = process.env.DISCORD_CHANNEL_ID;
 
 client.once("ready", () => {
-  console.log(`Discord bot online ✅`);
+  console.log("🤖 Discord bot online");
 });
 
 client.login(process.env.DISCORD_TOKEN);
 
-// Funzione per inviare messaggi nel canale staff
+// funzione esportata
 async function sendTicketMessage(ticket) {
   try {
     const channel = await client.channels.fetch(CHANNEL_ID);
-    if (!channel) return console.log("Canale Discord non trovato");
+    if (!channel) {
+      console.log("Canale Discord non trovato");
+      return;
+    }
 
-    const msg = `🎫 **Nuovo Ticket**
-**Utente:** ${ticket.username}
-**UUID:** ${ticket.uuid}
-**Messaggio:** ${ticket.message}`;
-
-    channel.send({ content: msg });
+    await channel.send(
+`🎫 **Nuovo Ticket**
+👤 Utente: ${ticket.username}
+🆔 UUID: ${ticket.uuid}
+💬 Messaggio: ${ticket.message}`
+    );
   } catch (err) {
-    console.error(err);
+    console.error("Errore Discord:", err.message);
   }
 }
 
